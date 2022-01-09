@@ -53,12 +53,16 @@ export class Builder {
     const then = ({ data: { data } }: { data: any }) => data;
     const error = ({ response: { data } }: { response: any }) => data;
 
-    return {
+    const result = {
       collections: await directus.post("collections", collections).then(then).catch(error),
 
       relations: await Promise.all(
         relations.map((relation) => directus.post("relations", relation).then(then).catch(error))
       )
     };
+
+    await directus.post("/utils/cache/clear");
+
+    return result;
   }
 }
