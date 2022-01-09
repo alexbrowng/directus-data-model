@@ -1,6 +1,6 @@
 import { Builder } from "./builder";
 
-type onDelete = "NO ACTION" | "SET NULL" | "SET DEFAULT" | "CASCADE" | "RESTRICT";
+export type onDelete = "NO ACTION" | "SET NULL" | "SET DEFAULT" | "CASCADE" | "RESTRICT";
 
 export type RelationSchema = {
   on_delete?: onDelete;

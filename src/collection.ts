@@ -1,6 +1,7 @@
 import { Builder } from "./builder";
 
 import { Field, FieldSchema, FieldMeta, FieldSpecial } from "./field";
+import { onDelete } from "./relation";
 
 export type CollectionAccountability = "all" | "activity" | null;
 
@@ -141,25 +142,46 @@ export class Collection {
     }
   }
 
-  user_created(name: string, template: string = "{{avatar.$thumbnail}} {{first_name}} {{last_name}}") {
+  user_created(
+    name: string,
+    options: {
+      template: string;
+      on_delete: onDelete;
+    } = { template: "{{avatar.$thumbnail}} {{first_name}} {{last_name}}", on_delete: "SET NULL" }
+  ) {
+    const { template, on_delete } = options;
     const field = this.uuid(name, "user").interface("select-dropdown-m2o", { template }).display("user");
 
-    field.relation("directus_users").on_delete("SET NULL");
+    field.relation("directus_users").on_delete(on_delete);
 
     return field;
   }
 
-  role_created(name: string, template: string = "{{name}}") {
+  role_created(
+    name: string,
+    options: {
+      template: string;
+      on_delete: onDelete;
+    } = { template: "{{name}}", on_delete: "SET NULL" }
+  ) {
+    const { template, on_delete } = options;
     const field = this.uuid(name, "role")
       .interface("select-dropdown-m2o", { template })
       .display("related-values", { template });
 
-    field.relation("directus_roles").on_delete("SET NULL");
+    field.relation("directus_roles").on_delete(on_delete);
 
     return field;
   }
 
-  user_updated(name: string, template: string = "{{avatar.$thumbnail}} {{first_name}} {{last_name}}") {
+  user_updated(
+    name: string,
+    options: {
+      template: string;
+      on_delete: onDelete;
+    } = { template: "{{avatar.$thumbnail}} {{first_name}} {{last_name}}", on_delete: "SET NULL" }
+  ) {
+    const { template, on_delete } = options;
     const field = this.uuid(name, null, "user").interface("select-dropdown-m2o", { template }).display("user");
 
     field.relation("directus_users").on_delete("SET NULL");
@@ -167,12 +189,19 @@ export class Collection {
     return field;
   }
 
-  role_updated(name: string, template: string = "{{name}}") {
+  role_updated(
+    name: string,
+    options: {
+      template: string;
+      on_delete: onDelete;
+    } = { template: "{{name}}", on_delete: "SET NULL" }
+  ) {
+    const { template, on_delete } = options;
     const field = this.uuid(name, null, "role")
       .interface("select-dropdown-m2o", { template })
       .display("related-values", { template });
 
-    field.relation("directus_roles").on_delete("SET NULL");
+    field.relation("directus_roles").on_delete(on_delete);
 
     return field;
   }
