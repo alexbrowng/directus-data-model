@@ -7,6 +7,8 @@ export type CollectionAccountability = "all" | "activity" | null;
 export type CollectionSchema = {};
 
 export type CollectionMeta = {
+  icon?: string;
+  color?: string;
   sort_field?: string;
   archive_field?: string;
   archive_value?: string | null;
@@ -68,6 +70,16 @@ export class Collection {
 
   singleton(value: boolean = true) {
     this.meta.singleton = value;
+    return this;
+  }
+
+  icon(value: string) {
+    this.meta.icon = value;
+    return this;
+  }
+
+  color(value: string) {
+    this.meta.color = value;
     return this;
   }
 
