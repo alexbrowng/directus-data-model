@@ -10,10 +10,13 @@ import { build } from "directus-data-model"
 const model = build((builder) => {
   const products = builder
     .collection("products")
-    .translation("es-ES", "Restaurantes", "restaurante", "restaurantes");
+    .sort("order")
+    .archive("status", "archived", "draft")
+    .accountability("all")
+    .translation("es-ES", "Productos", "producto", "productos");
 
   products
-    .primary_key("id", "integer")
+    .primary_key("id", "uuid")
     .hidden()
     .readonly()
     .translation("es-ES", "ID");
@@ -49,15 +52,14 @@ const model = build((builder) => {
   products
     .integer("order")
     .hidden()
-    .width("half")
+    .width("full")
     .translation("es-ES", "Orden");
-  
-  products.sort("order");
 
   products
     .string("status")
     .default("draft")
-    .width("half")
+    .notNullable()
+    .width("full")
     .interface("select-dropdown", {
       choices: [
         { text: "$t:published", value: "published" },
@@ -75,7 +77,33 @@ const model = build((builder) => {
     })
     .translation("es-ES", "Estado");
 
-  products.archive("status", "archived", "draft");
+  products
+    .string("title")
+    .notNullable()
+    .width("full")
+    .interface("input", { trim: true })
+    .display("formatted-value", { bold: true })
+    .required()
+    .translation("es-ES", "Título");
+
+  products
+    .string("slug")
+    .notNullable()
+    .unique()
+    .width("full")
+    .interface("input", { trim: true, slug: true })
+    .display("formatted-value", { prefix: "https://example.com/", color: "#00C897" })
+    .required()
+    .translation("es-ES", "Página");
+
+  products
+    .decimal("price")
+    .notNullable()
+    .width("full")
+    .interface("input", { step: 0.01, min: 0 })
+    .display("formatted-value", { format: true, suffix: " €" })
+    .required()
+    .translation("es-ES", "Precio");
 });
 
 const baseURL = "http://localhost:8080";
