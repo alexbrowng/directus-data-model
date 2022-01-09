@@ -124,7 +124,7 @@ export class Collection {
   user_created(name: string, template: string = "{{avatar.$thumbnail}} {{first_name}} {{last_name}}") {
     const field = this.uuid(name, "user").interface("select-dropdown-m2o", { template }).display("user");
 
-    field.relation("directus_users");
+    field.relation("directus_users").on_delete("SET NULL");
 
     return field;
   }
@@ -134,7 +134,7 @@ export class Collection {
       .interface("select-dropdown-m2o", { template })
       .display("related-values", { template });
 
-    field.relation("directus_roles");
+    field.relation("directus_roles").on_delete("SET NULL");
 
     return field;
   }
@@ -142,7 +142,7 @@ export class Collection {
   user_updated(name: string, template: string = "{{avatar.$thumbnail}} {{first_name}} {{last_name}}") {
     const field = this.uuid(name, null, "user").interface("select-dropdown-m2o", { template }).display("user");
 
-    field.relation("directus_users");
+    field.relation("directus_users").on_delete("SET NULL");
 
     return field;
   }
@@ -152,7 +152,7 @@ export class Collection {
       .interface("select-dropdown-m2o", { template })
       .display("related-values", { template });
 
-    field.relation("directus_roles");
+    field.relation("directus_roles").on_delete("SET NULL");
 
     return field;
   }
