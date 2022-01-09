@@ -63,6 +63,10 @@ export class Collection {
     return this.fields.find(({ name }) => name === field);
   }
 
+  findPrimaryKey() {
+    return this.fields.find((field) => field.schema.is_primary_key === true);
+  }
+
   hidden(value: boolean = true) {
     this.meta.hidden = value;
     return this;
