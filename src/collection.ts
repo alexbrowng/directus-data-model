@@ -1,7 +1,7 @@
 import { Builder } from "./builder";
 
 import { Field, FieldSchema, FieldMeta, FieldSpecial } from "./field";
-import { onDelete } from "./relation";
+import { onDelete, onDeselect } from "./relation";
 
 export type CollectionAccountability = "all" | "activity" | null;
 
@@ -345,6 +345,78 @@ export class Collection {
     field.relation("directus_files").on_delete("SET NULL");
 
     return field;
+  }
+
+  foreign(
+    name: string,
+    related_collection: string,
+    related_field: string | null,
+    options: {
+      template?: string;
+      sort_field?: string;
+      junction_field?: string;
+      one_deselect_action?: onDeselect;
+      on_delete?: onDelete;
+    }
+  ) {
+    const collection = this.builder.findCollection(related_collection);
+
+    if (!collection) {
+      throw Error("Collection not exists");
+    }
+
+    const primary_key = collection.findPrimaryKey();
+
+    if (!primary_key) {
+      throw Error("Collection hasn't primary key");
+    }
+
+    const { template } = options;
+
+    const field = this.field(name, primary_key.type)
+      .interface("select-dropdown-m2o", { template })
+      .display("related-values", { template });
+
+    const { sort_field, junction_field, one_deselect_action, on_delete } = options;
+    const relation = field.relation(related_collection);
+
+    if (related_field) {
+      relation.one_field(related_field);
+    }
+
+    if (junction_field) {
+      relation.junction_field(junction_field);
+    }
+
+    if (sort_field) {
+      relation.sort_field(sort_field);
+    }
+
+    if (one_deselect_action) {
+      relation.one_deselect_action(one_deselect_action);
+    }
+
+    if (on_delete) {
+      relation.on_delete(on_delete);
+    }
+
+    return field;
+  }
+
+  o2m(name: string, options: { template?: string }) {
+    const { template } = options;
+    return this.field(name, "alias")
+      .special("o2m")
+      .interface("list-o2m", { template })
+      .display("related-values", { template });
+  }
+
+  m2m(name: string, options: { template?: string }) {
+    const { template } = options;
+    return this.field(name, "alias")
+      .special("m2m")
+      .interface("list-m2m", { template })
+      .display("related-values", { template });
   }
 
   render() {
