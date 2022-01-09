@@ -48,7 +48,9 @@ export class Builder {
     return {
       collections: await directus.post("collections", collections).then(then).catch(error),
 
-      relations: await directus.post("relations", relations).then(then).catch(error)
+      relations: await Promise.all(
+        relations.map((relation) => directus.post("relations", relation).then(then).catch(error))
+      )
     };
   }
 }
