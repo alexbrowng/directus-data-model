@@ -2,6 +2,16 @@
 
 This repository is a proof of concept for creating data models for directus programmatically instead of with the admin UI.
 
+## Quickstart Guide
+
+1. Install packages: `make install` or `npm i && cd templates && npm i`
+2. Build package: `make build` or `npm run build`
+3. Run directus: `make docker-compose` or `docker-compose up -d`
+4. Create .env file: `cd templates && cp example.env .env`
+5. Run template:
+    - Blog: `make blog-template` or `cd templates && npm run blog`
+
+
 ## Example
 
 ```javascript
