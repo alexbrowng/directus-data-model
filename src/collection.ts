@@ -57,6 +57,10 @@ export class Collection {
     this.fields = fields === undefined ? [] : fields;
   }
 
+  findField(field: string) {
+    return this.fields.find(({ name }) => name === field);
+  }
+
   hidden(value: boolean = true) {
     this.meta.hidden = value;
     return this;

@@ -18,6 +18,14 @@ export class Builder {
     return collection;
   }
 
+  findCollection(collection: string) {
+    return this.collections.find(({ name }) => name === collection);
+  }
+
+  findField(field: string, collection: string) {
+    return this.findCollection(collection)?.findField(field);
+  }
+
   relation(collection: string, field: string, related_collection: string | null = null) {
     const relation = new Relation(this, collection, field, related_collection);
     this.relations.push(relation);
