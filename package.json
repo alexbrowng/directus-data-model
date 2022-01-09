@@ -1,0 +1,35 @@
+{
+  "name": "directus-data-model",
+  "version": "0.1.0",
+  "description": "Create the data model for directus programmatically",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "npm run cleanup",
+    "build": "tsc --build",
+    "cleanup": "rimraf dist",
+    "test": "jest --verbose --rootDir=tests"
+  },
+  "keywords": [
+    "directus"
+  ],
+  "author": {
+    "name": "Alejandro Castaño González",
+    "email": "alejandro@theseedsquad.com",
+    "url": "https://theseedsquad.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.7",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
