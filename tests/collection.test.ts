@@ -15,6 +15,10 @@ describe("integer primary key", () => {
     expect(field.type).toBe("integer");
   });
 
+  it("field is not null", () => {
+    expect(field.schema.is_nullable).toBeFalsy();
+  });
+
   it("is primary key", () => {
     expect(field.schema.is_primary_key).toBeTruthy();
   });
@@ -39,6 +43,10 @@ describe("uuid primary key", () => {
     expect(field.type).toBe("uuid");
   });
 
+  it("field is not null", () => {
+    expect(field.schema.is_nullable).toBeFalsy();
+  });
+
   it("special contains uuid", () => {
     expect(field.meta.special).toContain("uuid");
   });
@@ -61,6 +69,10 @@ describe("string primary key", () => {
 
   it("type is string", () => {
     expect(field.type).toBe("string");
+  });
+
+  it("field is not null", () => {
+    expect(field.schema.is_nullable).toBeFalsy();
   });
 
   it("is primary key", () => {
