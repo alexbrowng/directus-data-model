@@ -17,7 +17,11 @@ export type FieldSpecial =
   | "date-created"
   | "date-updated"
   | "file"
-  | "files";
+  | "files"
+  | "o2m"
+  | "m2o"
+  | "m2m"
+  | "m2a";
 
 export type FieldSchema = {
   max_length?: number;
