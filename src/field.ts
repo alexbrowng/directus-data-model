@@ -85,6 +85,11 @@ export class Field {
     return this;
   }
 
+  notNullable() {
+    this.schema.is_nullable = false;
+    return this;
+  }
+
   pk(value: boolean = true) {
     this.schema.is_primary_key = value;
     return this;

@@ -111,7 +111,7 @@ export class Collection {
   }
 
   primary_key(name: string, type: "integer" | "uuid" | "string") {
-    const field = this.field(name, type).pk();
+    const field = this.field(name, type).notNullable().pk();
     if (type === "integer") {
       return field.autoincrement();
     } else if (type === "uuid") {
